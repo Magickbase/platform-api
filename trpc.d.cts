@@ -1,37 +1,58 @@
 import * as _trpc_server from '@trpc/server';
 import * as _trpc_server_unstable_core_do_not_import from '@trpc/server/unstable-core-do-not-import';
+import { z } from 'zod';
 
 declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
     ctx: any;
     meta: object;
-    errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
-    transformer: false;
+    errorShape: {
+        data: {
+            zodError: z.typeToFlattenedError<any, string> | null;
+            code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_KEY;
+            httpStatus: number;
+            path?: string;
+            stack?: string;
+        };
+        message: string;
+        code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_NUMBER;
+    };
+    transformer: true;
 }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
     rgbpp: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         ctx: any;
         meta: object;
-        errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
-        transformer: false;
+        errorShape: {
+            data: {
+                zodError: z.typeToFlattenedError<any, string> | null;
+                code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_KEY;
+                httpStatus: number;
+                path?: string;
+                stack?: string;
+            };
+            message: string;
+            code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_NUMBER;
+        };
+        transformer: true;
     }, {
         /**
          * List of the basic asset infomation, including details like name, symbol, icon, etc.
          */
         infoList: _trpc_server.TRPCQueryProcedure<{
             input: {
-                pageSize?: number;
-                pageIndex?: number;
+                pageSize?: number | undefined;
+                pageIndex?: number | undefined;
             };
             output: {
-                data?: {
-                    symbol?: string;
-                    id?: string;
-                    name?: string;
-                    decimals?: number;
-                    icon?: string;
-                    tags?: string[];
+                data: {
+                    id: string;
+                    tags: string[];
+                    symbol?: string | undefined;
+                    name?: string | undefined;
+                    decimals?: number | undefined;
+                    icon?: string | undefined;
                 }[];
-                pagination?: {
-                    hasNext?: boolean;
+                pagination: {
+                    hasNext: boolean;
                 };
             };
         }>;
@@ -41,11 +62,11 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         issueCountRecords: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
-                status?: {
-                    timestamp?: number;
+                status: {
+                    timestamp: number;
                 };
-                count?: number;
-                assetType?: "xudt" | "dob";
+                count: number;
+                assetType: "xudt" | "dob";
             }[];
         }>;
         /**
@@ -54,11 +75,11 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         holderCountRecords: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
-                status?: {
-                    timestamp?: number;
+                status: {
+                    timestamp: number;
                 };
-                network?: "ckb" | "btc" | "doge";
-                count?: number;
+                network: "ckb" | "btc" | "doge";
+                count: number;
             }[];
         }>;
         /**
@@ -67,33 +88,43 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         marketCap: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
-                status?: {
-                    timestamp?: number;
+                status: {
+                    timestamp: number;
                 };
-                value?: number;
+                value: number;
             };
         }>;
     }>;
     asset: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         ctx: any;
         meta: object;
-        errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
-        transformer: false;
+        errorShape: {
+            data: {
+                zodError: z.typeToFlattenedError<any, string> | null;
+                code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_KEY;
+                httpStatus: number;
+                path?: string;
+                stack?: string;
+            };
+            message: string;
+            code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_NUMBER;
+        };
+        transformer: true;
     }, {
         /**
          * Basic asset infomation, including details like name, symbol, icon, etc.
          */
         info: _trpc_server.TRPCQueryProcedure<{
             input: {
-                assetId?: string;
+                assetId: string;
             };
             output: {
-                symbol?: string;
-                id?: string;
-                name?: string;
-                decimals?: number;
-                icon?: string;
-                tags?: string[];
+                id: string;
+                tags: string[];
+                symbol?: string | undefined;
+                name?: string | undefined;
+                decimals?: number | undefined;
+                icon?: string | undefined;
             };
         }>;
         /**
@@ -101,20 +132,20 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
          */
         infoList: _trpc_server.TRPCQueryProcedure<{
             input: {
-                pageSize?: number;
-                pageIndex?: number;
+                pageSize?: number | undefined;
+                pageIndex?: number | undefined;
             };
             output: {
-                data?: {
-                    symbol?: string;
-                    id?: string;
-                    name?: string;
-                    decimals?: number;
-                    icon?: string;
-                    tags?: string[];
+                data: {
+                    id: string;
+                    tags: string[];
+                    symbol?: string | undefined;
+                    name?: string | undefined;
+                    decimals?: number | undefined;
+                    icon?: string | undefined;
                 }[];
-                pagination?: {
-                    hasNext?: boolean;
+                pagination: {
+                    hasNext: boolean;
                 };
             };
         }>;
@@ -123,21 +154,21 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
          */
         quote: _trpc_server.TRPCQueryProcedure<{
             input: {
-                assetId?: string;
+                assetId: string;
             };
             output: {
-                totalSupply?: bigint;
-                holderCount?: {
-                    network?: "ckb" | "btc" | "doge";
-                    count?: number;
+                holderCount: {
+                    network: "ckb" | "btc" | "doge";
+                    count: number;
                 }[];
-                price?: number;
-                marketCap?: number;
-                volume24h?: number;
-                priceChange24h?: number;
-                circulatingSupply?: bigint;
-                fdv?: number;
-                txCount24h?: number;
+                txCount24h: number;
+                totalSupply?: bigint | undefined;
+                price?: number | undefined;
+                marketCap?: number | undefined;
+                volume24h?: number | undefined;
+                priceChange24h?: number | undefined;
+                circulatingSupply?: bigint | undefined;
+                fdv?: number | undefined;
             };
         }>;
         /**
@@ -145,20 +176,20 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
          */
         holderList: _trpc_server.TRPCQueryProcedure<{
             input: {
-                assetId?: string;
-                pageSize?: number;
-                pageIndex?: number;
+                assetId: string;
+                pageSize?: number | undefined;
+                pageIndex?: number | undefined;
             };
             output: {
-                data?: {
-                    value?: bigint;
-                    address?: string;
-                    network?: "ckb" | "btc" | "doge";
-                    usd?: number;
-                    percentage?: number;
+                data: {
+                    value: bigint;
+                    address: string;
+                    network: "ckb" | "btc" | "doge";
+                    usd: number;
+                    percentage: number;
                 }[];
-                pagination?: {
-                    hasNext?: boolean;
+                pagination: {
+                    hasNext: boolean;
                 };
             };
         }>;
@@ -167,22 +198,22 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
          */
         transactionList: _trpc_server.TRPCQueryProcedure<{
             input: {
-                assetId?: string;
-                pageSize?: number;
-                pageIndex?: number;
+                assetId: string;
+                pageSize?: number | undefined;
+                pageIndex?: number | undefined;
             };
             output: {
-                data?: {
-                    network?: "ckb" | "btc" | "doge";
-                    txHash?: string;
+                data: {
+                    network: "ckb" | "btc" | "doge";
+                    txHash: string;
                 }[];
-                pagination?: {
-                    hasNext?: boolean;
+                pagination: {
+                    hasNext: boolean;
                 };
             };
         }>;
     }>;
 }>>;
-type AppRouter = typeof appRouter;
+type TRPCRouter = typeof appRouter;
 
-export type { AppRouter };
+export type { TRPCRouter };

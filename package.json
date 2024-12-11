@@ -1,5 +1,5 @@
 {
-  "name": "@magickbase/web3platform",
+  "name": "@magickbase/p",
   "version": "0.0.1",
   "description": "",
   "types": "./trpc.d.cts",
