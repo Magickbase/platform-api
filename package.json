@@ -1,0 +1,12 @@
+{
+  "name": "@magickbase/web3platform",
+  "version": "0.0.1",
+  "description": "",
+  "types": "./trpc.d.cts",
+  "keywords": [],
+  "author": "homura.dev@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+   "@trpc/server": "^11.0.0-rc.660"
+  }
+}
