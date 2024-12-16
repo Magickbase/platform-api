@@ -23,3 +23,13 @@ const client = createTRPCClient<TRPCRouter>({
 If you are using TypeScript we recommend using TRPC to interact with the API for a better development experience.
 
 ![](./assets/p-client.gif)
+
+## Import this Repo
+
+```json
+{
+  "dependencies": {
+    "@magickbase/p": "github:<org>/web3platform"
+  }
+}
+```
