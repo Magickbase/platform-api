@@ -1,42 +1,23 @@
 import * as _trpc_server from '@trpc/server';
 import * as _trpc_server_unstable_core_do_not_import from '@trpc/server/unstable-core-do-not-import';
-import { z } from 'zod';
 
+/**
+ * This is the primary router for your server.
+ *
+ * All routers added in /api/routers should be manually added here.
+ */
 declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
     ctx: any;
     meta: object;
-    errorShape: {
-        data: {
-            zodError: z.typeToFlattenedError<any, string> | null;
-            code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_KEY;
-            httpStatus: number;
-            path?: string;
-            stack?: string;
-        };
-        message: string;
-        code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_NUMBER;
-    };
+    errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
     transformer: true;
 }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
     rgbpp: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         ctx: any;
         meta: object;
-        errorShape: {
-            data: {
-                zodError: z.typeToFlattenedError<any, string> | null;
-                code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_KEY;
-                httpStatus: number;
-                path?: string;
-                stack?: string;
-            };
-            message: string;
-            code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_NUMBER;
-        };
+        errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
         transformer: true;
     }, {
-        /**
-         * List of the basic asset infomation, including details like name, symbol, icon, etc.
-         */
         infoList: _trpc_server.TRPCQueryProcedure<{
             input: {
                 pageSize?: number | undefined;
@@ -56,9 +37,16 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 };
             };
         }>;
-        /**
-         * A list of the number of RGB++ assets issued with the timestamp.
-         */
+        transactionCountRecords: _trpc_server.TRPCQueryProcedure<{
+            input: void;
+            output: {
+                status: {
+                    timestamp: number;
+                };
+                network: "ckb" | "btc" | "doge";
+                count: number;
+            }[];
+        }>;
         issueCountRecords: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
@@ -69,9 +57,6 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 assetType: "xudt" | "dob";
             }[];
         }>;
-        /**
-         * A list of the holder count of RGB++ assets with the timestamp.
-         */
         holderCountRecords: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
@@ -82,9 +67,6 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 count: number;
             }[];
         }>;
-        /**
-         * The entire market cap of RGB++ assets
-         */
         marketCap: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
@@ -98,22 +80,9 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
     asset: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         ctx: any;
         meta: object;
-        errorShape: {
-            data: {
-                zodError: z.typeToFlattenedError<any, string> | null;
-                code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_KEY;
-                httpStatus: number;
-                path?: string;
-                stack?: string;
-            };
-            message: string;
-            code: _trpc_server_unstable_core_do_not_import.TRPC_ERROR_CODE_NUMBER;
-        };
+        errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
         transformer: true;
     }, {
-        /**
-         * Basic asset infomation, including details like name, symbol, icon, etc.
-         */
         info: _trpc_server.TRPCQueryProcedure<{
             input: {
                 assetId: string;
@@ -127,9 +96,6 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 icon?: string | undefined;
             };
         }>;
-        /**
-         * List of the basic asset infomation, including details like name, symbol, icon, etc.
-         */
         infoList: _trpc_server.TRPCQueryProcedure<{
             input: {
                 pageSize?: number | undefined;
@@ -149,9 +115,6 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 };
             };
         }>;
-        /**
-         * The latest market data for the asset, including price(in USD), total/circulating supply, market cap, etc
-         */
         quote: _trpc_server.TRPCQueryProcedure<{
             input: {
                 assetId: string;
@@ -171,9 +134,6 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 fdv?: number | undefined;
             };
         }>;
-        /**
-         * The holder list of the asset
-         */
         holderList: _trpc_server.TRPCQueryProcedure<{
             input: {
                 assetId: string;
@@ -193,9 +153,6 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 };
             };
         }>;
-        /**
-         * The transaction hashes of the asset
-         */
         transactionList: _trpc_server.TRPCQueryProcedure<{
             input: {
                 assetId: string;
@@ -214,6 +171,6 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         }>;
     }>;
 }>>;
-type TRPCRouter = typeof appRouter;
+type AppRouter = typeof appRouter;
 
-export type { TRPCRouter };
+export type { AppRouter as TRPCRouter };
