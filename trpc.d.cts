@@ -34,6 +34,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 }[];
                 pagination: {
                     hasNext: boolean;
+                    total?: number | undefined;
                 };
             };
         }>;
@@ -43,7 +44,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 status: {
                     timestamp: number;
                 };
-                network: "ckb" | "btc" | "doge";
+                network: "ckb" | "btc" | "doge" | "unknown";
                 count: number;
             }[];
         }>;
@@ -63,7 +64,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 status: {
                     timestamp: number;
                 };
-                network: "ckb" | "btc" | "doge";
+                network: "ckb" | "btc" | "doge" | "unknown";
                 count: number;
             }[];
         }>;
@@ -94,16 +95,16 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 assetId: string;
             };
             output: {
-                totalSupply: bigint | null;
+                totalSupply: string | null;
                 holderCount: {
-                    network: "ckb" | "btc" | "doge";
+                    network: "ckb" | "btc" | "doge" | "unknown";
                     count: number;
                 }[];
                 price: string | null;
                 marketCap: string | null;
                 volume24h: string | null;
                 priceChange24h: number | null;
-                circulatingSupply: bigint | null;
+                circulatingSupply: string | null;
                 fdv: string | null;
                 txCount24h: number;
             } | null;
@@ -116,14 +117,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             };
             output: {
                 data: {
-                    value: bigint;
+                    value: string;
                     address: string;
-                    network: "ckb" | "btc" | "doge";
+                    network: "ckb" | "btc" | "doge" | "unknown";
                     usd: string;
                     percentage: number;
                 }[];
                 pagination: {
                     hasNext: boolean;
+                    total?: number | undefined;
                 };
             };
         }>;
@@ -135,11 +137,12 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             };
             output: {
                 data: {
-                    network: "ckb" | "btc" | "doge";
+                    network: "ckb" | "btc" | "doge" | "unknown";
                     txHash: string;
                 }[];
                 pagination: {
                     hasNext: boolean;
+                    total?: number | undefined;
                 };
             };
         }>;
