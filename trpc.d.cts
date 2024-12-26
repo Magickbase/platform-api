@@ -18,19 +18,35 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
         transformer: true;
     }, {
-        infoList: _trpc_server.TRPCQueryProcedure<{
+        coinList: _trpc_server.TRPCQueryProcedure<{
             input: {
                 pageSize?: number | undefined;
                 pageIndex?: number | undefined;
-            };
+            } | undefined;
             output: {
                 data: {
-                    symbol: string | null;
-                    id: string;
-                    name: string | null;
-                    decimals: number | null;
-                    icon: string | null;
-                    tags: string[];
+                    info: {
+                        symbol: string | null;
+                        id: string;
+                        name: string | null;
+                        decimals: number | null;
+                        icon: string | null;
+                        tags: string[];
+                    };
+                    quote: {
+                        totalSupply: string | null;
+                        holderCount: {
+                            network: "ckb" | "btc" | "unknown" | "doge";
+                            count: number;
+                        }[];
+                        price: string | null;
+                        marketCap: string | null;
+                        volume24h: string | null;
+                        priceChange24h: number | null;
+                        circulatingSupply: string | null;
+                        fdv: string | null;
+                        txCount24h: number;
+                    };
                 }[];
                 pagination: {
                     hasNext: boolean;
@@ -44,7 +60,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 status: {
                     timestamp: number;
                 };
-                network: "ckb" | "btc" | "doge" | "unknown";
+                network: "ckb" | "btc" | "unknown" | "doge";
                 count: number;
             }[];
         }>;
@@ -64,7 +80,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 status: {
                     timestamp: number;
                 };
-                network: "ckb" | "btc" | "doge" | "unknown";
+                network: "ckb" | "btc" | "unknown" | "doge";
                 count: number;
             }[];
         }>;
@@ -82,12 +98,28 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 assetId: string;
             };
             output: {
-                symbol: string | null;
-                id: string;
-                name: string | null;
-                decimals: number | null;
-                icon: string | null;
-                tags: string[];
+                info: {
+                    symbol: string | null;
+                    id: string;
+                    name: string | null;
+                    decimals: number | null;
+                    icon: string | null;
+                    tags: string[];
+                };
+                quote: {
+                    totalSupply: string | null;
+                    holderCount: {
+                        network: "ckb" | "btc" | "unknown" | "doge";
+                        count: number;
+                    }[];
+                    price: string | null;
+                    marketCap: string | null;
+                    volume24h: string | null;
+                    priceChange24h: number | null;
+                    circulatingSupply: string | null;
+                    fdv: string | null;
+                    txCount24h: number;
+                };
             } | null;
         }>;
         quote: _trpc_server.TRPCQueryProcedure<{
@@ -97,7 +129,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             output: {
                 totalSupply: string | null;
                 holderCount: {
-                    network: "ckb" | "btc" | "doge" | "unknown";
+                    network: "ckb" | "btc" | "unknown" | "doge";
                     count: number;
                 }[];
                 price: string | null;
@@ -119,7 +151,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 data: {
                     value: string;
                     address: string;
-                    network: "ckb" | "btc" | "doge" | "unknown";
+                    network: "ckb" | "btc" | "unknown" | "doge";
                     usd: string;
                     percentage: number;
                 }[];
@@ -129,6 +161,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 };
             };
         }>;
+        addressHoldAssets: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+                network: "ckb" | "btc" | "unknown" | "doge";
+            };
+            output: {
+                balance: string;
+            } | null;
+        }>;
         transactionList: _trpc_server.TRPCQueryProcedure<{
             input: {
                 assetId: string;
@@ -137,7 +178,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             };
             output: {
                 data: {
-                    network: "ckb" | "btc" | "doge" | "unknown";
+                    network: "ckb" | "btc" | "unknown" | "doge";
                     txHash: string;
                 }[];
                 pagination: {
