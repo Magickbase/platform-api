@@ -18,19 +18,35 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
         transformer: true;
     }, {
-        infoList: _trpc_server.TRPCQueryProcedure<{
+        coinList: _trpc_server.TRPCQueryProcedure<{
             input: {
                 pageSize?: number | undefined;
                 pageIndex?: number | undefined;
-            };
+            } | undefined;
             output: {
                 data: {
-                    symbol: string | null;
-                    id: string;
-                    name: string | null;
-                    decimals: number | null;
-                    icon: string | null;
-                    tags: string[];
+                    info: {
+                        symbol: string | null;
+                        id: string;
+                        name: string | null;
+                        decimals: number | null;
+                        icon: string | null;
+                        tags: string[];
+                    };
+                    quote: {
+                        totalSupply: string | null;
+                        holderCount: {
+                            network: "ckb" | "btc" | "doge" | "unknown";
+                            count: number;
+                        }[];
+                        price: string | null;
+                        marketCap: string | null;
+                        volume24h: string | null;
+                        circulatingSupply: string | null;
+                        fdv: string | null;
+                        priceChange24h: number | null;
+                        txCount24h: number;
+                    };
                 }[];
                 pagination: {
                     hasNext: boolean;
@@ -82,12 +98,28 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 assetId: string;
             };
             output: {
-                symbol: string | null;
-                id: string;
-                name: string | null;
-                decimals: number | null;
-                icon: string | null;
-                tags: string[];
+                info: {
+                    symbol: string | null;
+                    id: string;
+                    name: string | null;
+                    decimals: number | null;
+                    icon: string | null;
+                    tags: string[];
+                };
+                quote: {
+                    totalSupply: string | null;
+                    holderCount: {
+                        network: "ckb" | "btc" | "doge" | "unknown";
+                        count: number;
+                    }[];
+                    price: string | null;
+                    marketCap: string | null;
+                    volume24h: string | null;
+                    circulatingSupply: string | null;
+                    fdv: string | null;
+                    priceChange24h: number | null;
+                    txCount24h: number;
+                };
             } | null;
         }>;
         quote: _trpc_server.TRPCQueryProcedure<{
@@ -103,9 +135,9 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 price: string | null;
                 marketCap: string | null;
                 volume24h: string | null;
-                priceChange24h: number | null;
                 circulatingSupply: string | null;
                 fdv: string | null;
+                priceChange24h: number | null;
                 txCount24h: number;
             } | null;
         }>;
@@ -128,6 +160,27 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                     total?: number | undefined;
                 };
             };
+        }>;
+        addressHoldAssets: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+            };
+            output: {
+                assets: {
+                    info: {
+                        symbol: string | null;
+                        id: string;
+                        name: string | null;
+                        decimals: number | null;
+                        icon: string | null;
+                    };
+                    value: string;
+                    amount: string;
+                    price: string | null;
+                    priceChange24h: number | null;
+                }[];
+                balance: string;
+            } | null;
         }>;
         transactionList: _trpc_server.TRPCQueryProcedure<{
             input: {
