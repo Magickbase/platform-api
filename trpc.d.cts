@@ -164,9 +164,20 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         addressHoldAssets: _trpc_server.TRPCQueryProcedure<{
             input: {
                 address: string;
-                network: "ckb" | "btc" | "unknown" | "doge";
             };
             output: {
+                assets: {
+                    info: {
+                        symbol: string | null;
+                        id: string;
+                        name: string | null;
+                        decimals: number | null;
+                        icon: string | null;
+                    };
+                    value: string;
+                    amount: string;
+                    priceChange24h: number | null;
+                }[];
                 balance: string;
             } | null;
         }>;
