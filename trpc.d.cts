@@ -36,15 +36,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                     quote: {
                         totalSupply: string | null;
                         holderCount: {
-                            network: "ckb" | "btc" | "unknown" | "doge";
+                            network: "ckb" | "btc" | "doge" | "unknown";
                             count: number;
                         }[];
                         price: string | null;
                         marketCap: string | null;
                         volume24h: string | null;
-                        priceChange24h: number | null;
                         circulatingSupply: string | null;
                         fdv: string | null;
+                        priceChange24h: number | null;
                         txCount24h: number;
                     };
                 }[];
@@ -60,7 +60,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 status: {
                     timestamp: number;
                 };
-                network: "ckb" | "btc" | "unknown" | "doge";
+                network: "ckb" | "btc" | "doge" | "unknown";
                 count: number;
             }[];
         }>;
@@ -80,7 +80,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 status: {
                     timestamp: number;
                 };
-                network: "ckb" | "btc" | "unknown" | "doge";
+                network: "ckb" | "btc" | "doge" | "unknown";
                 count: number;
             }[];
         }>;
@@ -109,15 +109,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 quote: {
                     totalSupply: string | null;
                     holderCount: {
-                        network: "ckb" | "btc" | "unknown" | "doge";
+                        network: "ckb" | "btc" | "doge" | "unknown";
                         count: number;
                     }[];
                     price: string | null;
                     marketCap: string | null;
                     volume24h: string | null;
-                    priceChange24h: number | null;
                     circulatingSupply: string | null;
                     fdv: string | null;
+                    priceChange24h: number | null;
                     txCount24h: number;
                 };
             } | null;
@@ -129,15 +129,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             output: {
                 totalSupply: string | null;
                 holderCount: {
-                    network: "ckb" | "btc" | "unknown" | "doge";
+                    network: "ckb" | "btc" | "doge" | "unknown";
                     count: number;
                 }[];
                 price: string | null;
                 marketCap: string | null;
                 volume24h: string | null;
-                priceChange24h: number | null;
                 circulatingSupply: string | null;
                 fdv: string | null;
+                priceChange24h: number | null;
                 txCount24h: number;
             } | null;
         }>;
@@ -151,7 +151,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 data: {
                     value: string;
                     address: string;
-                    network: "ckb" | "btc" | "unknown" | "doge";
+                    network: "ckb" | "btc" | "doge" | "unknown";
                     usd: string;
                     percentage: number;
                 }[];
@@ -176,6 +176,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                     };
                     value: string;
                     amount: string;
+                    price: string | null;
                     priceChange24h: number | null;
                 }[];
                 balance: string;
@@ -189,7 +190,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             };
             output: {
                 data: {
-                    network: "ckb" | "btc" | "unknown" | "doge";
+                    network: "ckb" | "btc" | "doge" | "unknown";
                     txHash: string;
                 }[];
                 pagination: {
