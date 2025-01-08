@@ -1,6 +1,6 @@
-# Magickbase Web3 Platform API
+# Magickbase Platform API
 
-## Usage with TRPC
+## Usage with tRPC
 
 ```ts
 import { TRPCRouter } from '@magickbase/p';
@@ -20,7 +20,7 @@ const client = createTRPCClient<TRPCRouter>({
 });
 ```
 
-If you are using TypeScript we recommend using TRPC to interact with the API for a better development experience.
+It is recommended to use tRPC and TypeScript to interact with the platform API for a better development experience
 
 ![](./assets/p-client.gif)
 
@@ -29,7 +29,7 @@ If you are using TypeScript we recommend using TRPC to interact with the API for
 ```json
 {
   "dependencies": {
-    "@magickbase/p": "github:<org>/web3platform"
+    "@magickbase/p": "github:magickbase/platform-api"
   }
 }
 ```
