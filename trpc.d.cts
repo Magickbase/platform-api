@@ -10,18 +10,18 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
     ctx: any;
     meta: object;
     errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
-    transformer: true;
+    transformer: false;
 }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
     rgbpp: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         ctx: any;
         meta: object;
         errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
-        transformer: true;
-    }, {
+        transformer: false;
+    }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
         coinList: _trpc_server.TRPCQueryProcedure<{
             input: {
+                page?: number | undefined;
                 pageSize?: number | undefined;
-                pageIndex?: number | undefined;
             } | undefined;
             output: {
                 data: {
@@ -36,15 +36,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                     quote: {
                         totalSupply: string | null;
                         holderCount: {
-                            network: "unknown" | "ckb" | "btc" | "doge";
+                            network: "ckb" | "btc" | "unknown" | "doge";
                             count: number;
                         }[];
                         price: string | null;
                         marketCap: string | null;
                         volume24h: string | null;
+                        priceChange24h: number | null;
                         circulatingSupply: string | null;
                         fdv: string | null;
-                        priceChange24h: number | null;
                         txCount24h: number;
                     };
                 }[];
@@ -57,40 +57,69 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         transactionCountRecords: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
+                network: "ckb" | "btc" | "unknown" | "doge";
+                count: number;
                 status: {
                     timestamp: number;
                 };
-                network: "unknown" | "ckb" | "btc" | "doge";
-                count: number;
             }[];
+        }>;
+        addressTransactions: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+            } & {
+                page?: number | undefined;
+                pageSize?: number | undefined;
+            };
+            output: {
+                data: {
+                    txHash: string;
+                    time: string;
+                    network: string;
+                    blockNumber: string;
+                    changes: {
+                        assetId: string;
+                        value: string;
+                        volume: string;
+                    }[];
+                    fromAddresses: string[];
+                    toAddresses: string[];
+                    assets: ({} | null)[];
+                }[];
+                pagination: {
+                    page: number;
+                    pageSize: number;
+                    rowCount: number;
+                };
+            };
         }>;
         issueCountRecords: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
+                count: number;
                 status: {
                     timestamp: number;
                 };
-                count: number;
                 assetType: "xudt" | "dob";
             }[];
         }>;
         holderCountRecords: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
+                network: "ckb" | "btc" | "unknown" | "doge";
+                count: number;
                 status: {
                     timestamp: number;
                 };
-                network: "unknown" | "ckb" | "btc" | "doge";
-                count: number;
             }[];
         }>;
         marketCap: _trpc_server.TRPCQueryProcedure<{
             input: void;
             output: {
+                value: string;
                 status: {
                     timestamp: number;
                 };
-                value: string;
             };
         }>;
         info: _trpc_server.TRPCQueryProcedure<{
@@ -109,15 +138,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 quote: {
                     totalSupply: string | null;
                     holderCount: {
-                        network: "unknown" | "ckb" | "btc" | "doge";
+                        network: "ckb" | "btc" | "unknown" | "doge";
                         count: number;
                     }[];
                     price: string | null;
                     marketCap: string | null;
                     volume24h: string | null;
+                    priceChange24h: number | null;
                     circulatingSupply: string | null;
                     fdv: string | null;
-                    priceChange24h: number | null;
                     txCount24h: number;
                 };
             } | null;
@@ -129,15 +158,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             output: {
                 totalSupply: string | null;
                 holderCount: {
-                    network: "unknown" | "ckb" | "btc" | "doge";
+                    network: "ckb" | "btc" | "unknown" | "doge";
                     count: number;
                 }[];
                 price: string | null;
                 marketCap: string | null;
                 volume24h: string | null;
+                priceChange24h: number | null;
                 circulatingSupply: string | null;
                 fdv: string | null;
-                priceChange24h: number | null;
                 txCount24h: number;
             } | null;
         }>;
@@ -146,10 +175,10 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 assetId: string;
             };
             output: {
-                value: string;
                 address: string;
                 amount: string;
-                network: "unknown" | "ckb" | "btc" | "doge";
+                value: string;
+                network: "ckb" | "btc" | "unknown" | "doge";
                 percentage: number;
             }[] | null;
         }>;
@@ -166,8 +195,8 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                         decimals: number | null;
                         icon: string | null;
                     };
-                    value: string;
                     amount: string;
+                    value: string;
                     price: string | null;
                     priceChange24h: number | null;
                 }[];
@@ -176,14 +205,38 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         }>;
         transactionList: _trpc_server.TRPCQueryProcedure<{
             input: {
-                assetId: string;
+                assetId?: string | undefined;
+            } & {
+                page?: number | undefined;
                 pageSize?: number | undefined;
-                pageIndex?: number | undefined;
             };
             output: {
                 data: {
-                    network: "unknown" | "ckb" | "btc" | "doge";
+                    network: "ckb" | "btc" | "unknown" | "doge";
                     txHash: string;
+                    timestamp: number;
+                    btc: {
+                        txid: string | null;
+                    };
+                    ckbTransaction: {
+                        outputs: {
+                            index: number;
+                            txHash: string;
+                            capacity: string;
+                            lock: {
+                                codeHash: string;
+                                hashType: string;
+                                args: string;
+                            };
+                            cellType: string;
+                            xudtInfo: {
+                                symbol: string | null;
+                                amount: string;
+                                decimal: number | null;
+                            } | null;
+                        }[];
+                    };
+                    direction?: "on" | "off" | null | undefined;
                 }[];
                 pagination: {
                     hasNext: boolean;
@@ -191,14 +244,14 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 };
             };
         }>;
-    }>;
+    }>>;
     temp: {
         btc: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             ctx: any;
             meta: object;
             errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
-            transformer: true;
-        }, {
+            transformer: false;
+        }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
             address: _trpc_server.TRPCQueryProcedure<{
                 input: string;
                 output: {
@@ -218,12 +271,14 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 };
             }>;
             transaction: _trpc_server.TRPCQueryProcedure<{
-                input: string;
+                input: {
+                    txid: string;
+                };
                 output: {
                     blockHash: string;
-                    txid: string;
                     blockHeight: number;
                     size: number;
+                    txid: string;
                     fee: number;
                     confirmed: boolean;
                     vin: {
@@ -232,15 +287,15 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                         isCoinbase: boolean;
                         scriptsig_asm: string;
                         prevout: {
-                            value: number;
                             address: string;
+                            value: number;
                             txid: string;
                             vout: number;
                         };
                     }[];
                     vout: {
-                        value: number;
                         address: string;
+                        value: number;
                         scriptpubkey_address: string;
                         scriptpubkey_asm: string;
                         scriptpubkey_type: string;
@@ -257,7 +312,33 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                     }[];
                 };
             }>;
-        }>;
+            chainInfo: _trpc_server.TRPCQueryProcedure<{
+                input: void;
+                output: {
+                    difficulty: number;
+                    fee: {
+                        fastestFee: number;
+                        halfHourFee: number;
+                        hourFee: number;
+                        minimumFee: number;
+                    };
+                    rgbpp: {
+                        holdersCount?: number | undefined;
+                        txCountInLast24h?: number | undefined;
+                    };
+                    tipBlockHeight: number;
+                    tipBlockHash: string;
+                };
+            }>;
+            addressBase: _trpc_server.TRPCQueryProcedure<{
+                input: string;
+                output: {
+                    satoshis: number;
+                    txCount: number;
+                    pendingSatoshis: number;
+                };
+            }>;
+        }>>;
     };
 }>>;
 type AppRouter = typeof appRouter;
