@@ -1,12 +1,13 @@
 {
   "name": "@magickbase/p",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "types": "./trpc.d.cts",
   "keywords": [],
   "author": "homura.dev@gmail.com",
   "license": "MIT",
   "peerDependencies": {
-   "@trpc/server": "^11.0.0-rc.660"
+    "@trpc/server": "^11.0.0-rc.660",
+    "openapi-fetch": "^0.13.5"
   }
 }

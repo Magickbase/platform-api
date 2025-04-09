@@ -1,3 +1,4 @@
+import * as openapi_fetch from 'openapi-fetch';
 import * as _trpc_server from '@trpc/server';
 import * as _trpc_server_unstable_core_do_not_import from '@trpc/server/unstable-core-do-not-import';
 
@@ -12,6 +13,190 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
     errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
     transformer: false;
 }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
+    address: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
+        ctx: any;
+        meta: object;
+        errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
+        transformer: false;
+    }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
+        historyAsset: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+                recentDays?: number | undefined;
+            };
+            output: {
+                date: string;
+                value: string;
+            }[];
+        }>;
+        historyTransactionCount: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+                recentMonths?: number | undefined;
+            };
+            output: {
+                count: number;
+                month: string;
+            }[];
+        }>;
+        overview: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+            };
+            output: {
+                volume: string;
+                received: string;
+                sent: string;
+                transactions: number;
+            };
+        }>;
+        liveCells: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+                pageSize?: number | undefined;
+                cursor?: string | undefined;
+            };
+            output: {
+                data: {
+                    amount: string;
+                    tokenInfo: {
+                        symbol: string | null;
+                        id: string;
+                        layer: number;
+                        parentId: string | null;
+                        name: string;
+                        totalSupply: bigint | null;
+                        decimals: number | null;
+                        description: string | null;
+                        icon: string | null;
+                        keywords: string | null;
+                        public: boolean;
+                        firstFoundBlock: string | null;
+                        firstMintAt: Date | null;
+                    } | {
+                        symbol: string | null;
+                        id: string;
+                        decimals: number | null;
+                        icon: string | null;
+                    } | null;
+                    token: string;
+                    blockHeight: number;
+                    outPoint: string;
+                    capacity: string;
+                }[];
+                hasNext: boolean;
+                lastCursor: string;
+            };
+        }>;
+        transactions: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+                orderBy?: ("asc" | "desc" | "time" | "asset" | "change")[] | undefined;
+                asset?: string | undefined;
+                page?: number | undefined;
+                pageSize?: number | undefined;
+                chain?: "CKB" | "BTC" | undefined;
+            };
+            output: {
+                data: {
+                    network: "CKB" | "BTC";
+                    txHash: string;
+                    time: Date;
+                    blockNumber: number;
+                    assets: {
+                        symbol: string | null;
+                        id: string;
+                        layer: number;
+                        parentId: string | null;
+                        name: string;
+                        totalSupply: bigint | null;
+                        decimals: number | null;
+                        description: string | null;
+                        icon: string | null;
+                        keywords: string | null;
+                        public: boolean;
+                        firstFoundBlock: string | null;
+                        firstMintAt: Date | null;
+                    }[];
+                    changes: {
+                        assetId: string;
+                        volume: number;
+                        value: string;
+                    }[];
+                    fromAddresses: string[];
+                    toAddresses: string[];
+                }[];
+                pagination: {
+                    page: number;
+                    pageSize: number;
+                    rowCount: number;
+                };
+            };
+        }>;
+        getProtocals: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                address: string;
+            };
+            output: {
+                type: string;
+                value: string;
+                key: string;
+                depositVolume: string;
+                compensationVolume: string;
+                deposit: string;
+                depositTimestamp: Date | null;
+                compensation: string;
+            }[];
+        }>;
+        getAddressAssets: _trpc_server.TRPCQueryProcedure<{
+            input: string;
+            output: {
+                assetId: string;
+                assetAmount: string;
+                value: string | null;
+                percentChange24h: number;
+                assetInfo: {
+                    symbol: string | null;
+                    id: string;
+                    layer: number;
+                    parentId: string | null;
+                    name: string;
+                    totalSupply: bigint | null;
+                    decimals: number | null;
+                    description: string | null;
+                    icon: string | null;
+                    keywords: string | null;
+                    public: boolean;
+                    firstFoundBlock: string | null;
+                    firstMintAt: Date | null;
+                } | null;
+            }[];
+        }>;
+        getAddressFirstTx: _trpc_server.TRPCQueryProcedure<{
+            input: string;
+            output: {
+                network: string;
+                txHash: string;
+                time: Date;
+                blockNumber: number;
+                assets: ({
+                    symbol?: string | null | undefined;
+                    id?: string | undefined;
+                    layer?: number | undefined;
+                    parentId?: string | null | undefined;
+                    name?: string | undefined;
+                    totalSupply?: bigint | null | undefined;
+                    decimals?: number | null | undefined;
+                    description?: string | null | undefined;
+                    icon?: string | null | undefined;
+                    keywords?: string | null | undefined;
+                    public?: boolean | undefined;
+                    firstFoundBlock?: string | null | undefined;
+                    firstMintAt?: Date | null | undefined;
+                } | null)[];
+            } | undefined;
+        }>;
+    }>>;
     rgbpp: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
         ctx: any;
         meta: object;
@@ -241,6 +426,249 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 pagination: {
                     hasNext: boolean;
                     total?: number | undefined;
+                };
+            };
+        }>;
+    }>>;
+    explorer: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
+        ctx: any;
+        meta: object;
+        errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
+        transformer: false;
+    }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
+        nervosDao: _trpc_server.TRPCQueryProcedure<{
+            input: void;
+            output: openapi_fetch.FetchResponse<{
+                parameters: {
+                    query?: never;
+                    header: {
+                        Accept: string;
+                        "Content-Type": string;
+                    };
+                    path?: never;
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            "application/json": {
+                                data: {
+                                    attributes: {
+                                        average_deposit_time: string;
+                                        claimed_compensation: string;
+                                        claimed_compensation_changes: string;
+                                        deposit_changes: string;
+                                        deposit_compensation: string;
+                                        depositor_changes: string;
+                                        depositors_count: string;
+                                        estimated_apc: string;
+                                        mining_reward: string;
+                                        total_deposit: string;
+                                        treasury_amount: string;
+                                        unclaimed_compensation: string;
+                                        unclaimed_compensation_changes: string;
+                                    };
+                                };
+                            };
+                        };
+                        400: {
+                            headers: {
+                                [name: string]: unknown;
+                            };
+                            content: {
+                                "application/json": Record<string, never>;
+                            };
+                        };
+                    };
+                };
+            }, {
+                params: {
+                    header: {
+                        'Content-Type': string;
+                        Accept: string;
+                    };
+                };
+            }, `${string}/${string}`>;
+        }>;
+        nervosDaoTx: _trpc_server.TRPCQueryProcedure<{
+            input: ({
+                page?: number | undefined;
+                pageSize?: number | undefined;
+            } & {
+                address?: string | undefined;
+            }) | undefined;
+            output: {
+                data?: {
+                    id?: string;
+                    type?: string;
+                    attributes?: {
+                        is_cellbase: boolean;
+                        transaction_hash?: string;
+                        block_number?: string;
+                        block_timestamp?: string;
+                        display_inputs_count: number;
+                        display_outputs_count: number;
+                        display_inputs?: {
+                            id?: string;
+                            from_cellbase: boolean;
+                            capacity?: string;
+                            address_hash?: string;
+                            generated_tx_hash?: string;
+                            cell_index?: string;
+                            cell_type?: string;
+                            since?: {
+                                raw?: string;
+                                median_timestamp?: string;
+                            };
+                        }[];
+                        display_outputs?: {
+                            id?: string;
+                            capacity?: string;
+                            address_hash?: string;
+                            status?: string;
+                            consumed_tx_hash?: string;
+                            cell_type?: string;
+                        }[];
+                        income?: unknown;
+                    };
+                }[];
+                meta?: {
+                    total: number;
+                    page_size: number;
+                };
+            } | undefined;
+        }>;
+        daoDepositors: _trpc_server.TRPCQueryProcedure<{
+            input: void;
+            output: openapi_fetch.FetchResponse<{
+                parameters: {
+                    query?: never;
+                    header: {
+                        Accept: string;
+                        "Content-Type": string;
+                    };
+                    path?: never;
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            "application/json": {
+                                data: {
+                                    attributes: {
+                                        address_hash: string;
+                                        average_deposit_time: string;
+                                        dao_deposit: string;
+                                    };
+                                }[];
+                            };
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            "application/json": Record<string, never>;
+                        };
+                    };
+                };
+            }, {
+                params: {
+                    header: {
+                        'Content-Type': string;
+                        Accept: string;
+                    };
+                };
+            }, `${string}/${string}`>;
+        }>;
+        totalDaoDepositStatistics: _trpc_server.TRPCQueryProcedure<{
+            input: void;
+            output: openapi_fetch.FetchResponse<{
+                parameters: {
+                    query?: never;
+                    header: {
+                        Accept: string;
+                        "Content-Type": string;
+                    };
+                    path?: never;
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            "application/json": {
+                                data: {
+                                    attributes: {
+                                        created_at_unixtimestamp: string;
+                                        total_dao_deposit: string;
+                                        total_depositors_count: string;
+                                    };
+                                }[];
+                            };
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            "application/json": Record<string, never>;
+                        };
+                    };
+                };
+            }, {
+                params: {
+                    header: {
+                        'Content-Type': string;
+                        Accept: string;
+                    };
+                };
+            }, `${string}/${string}`>;
+        }>;
+        typeOf: _trpc_server.TRPCQueryProcedure<{
+            input: string;
+            output: "address" | "block" | "udt" | "bitcoin_block" | "ckb_transaction" | "lock_hash" | "type_script" | "lock_script" | "bitcoin_transaction" | "token_collection" | "token_item" | "did" | "bitcoin_address" | "fiber_graph_node" | "not_found";
+        }>;
+        addressBase: _trpc_server.TRPCQueryProcedure<{
+            input: string;
+            output: {
+                balance: {
+                    total: string;
+                    occupied: string;
+                };
+                tx: {
+                    count: string;
+                };
+            };
+        }>;
+        chainInfo: _trpc_server.TRPCQueryProcedure<{
+            input: void;
+            output: {
+                txCountInLast24h: number | null;
+                fees: {
+                    low: number;
+                    medium: number;
+                    high: number;
+                };
+                tipBlock: {
+                    number: number | null;
+                };
+                udtStats: {
+                    holders: number | null;
+                    txCountInLast24h: number | null;
                 };
             };
         }>;
