@@ -1,13 +1,19 @@
 {
   "name": "@magickbase/p",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "types": "./trpc.d.cts",
   "keywords": [],
   "author": "homura.dev@gmail.com",
   "license": "MIT",
   "peerDependencies": {
+    "@ckb-lumos/lumos": "^0.23.0",
     "@trpc/server": "^11.0.0-rc.660",
+    "drizzle-orm": "^0.42.0",
     "openapi-fetch": "^0.13.5"
+  },
+  "devDependencies": {
+    "@ckb-lumos/lumos": "^0.23.0",
+    "drizzle-orm": "^0.42.0"
   }
 }

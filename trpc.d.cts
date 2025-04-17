@@ -1,11 +1,352 @@
 import * as openapi_fetch from 'openapi-fetch';
+import * as drizzle_orm_pg_core from 'drizzle-orm/pg-core';
+import { Script } from '@ckb-lumos/lumos';
 import * as _trpc_server from '@trpc/server';
 import * as _trpc_server_unstable_core_do_not_import from '@trpc/server/unstable-core-do-not-import';
+
+interface OutPoint {
+    txid: string;
+    index: number;
+}
+interface TransactionBase {
+    txid: string;
+    hash: string;
+    version: number;
+    size: number;
+    weight: number;
+    locktime: number;
+}
+interface Vout {
+    outpoint: OutPoint;
+    value: number;
+    address: string;
+    scriptpubkey?: string;
+    scriptpubkey_address?: string;
+    scriptpubkey_asm?: string;
+    scriptpubkey_type?: string;
+}
+interface Vin {
+    consumed_outpoint: OutPoint;
+    txid: string;
+    is_coinbase: boolean;
+    scriptsig_asm: string;
+    vout: Vout;
+}
+interface TransactionDetail extends TransactionBase {
+    blockHeight: number;
+    fee?: number;
+}
+
+declare const tx: drizzle_orm_pg_core.PgTableWithColumns<{
+    name: "tx";
+    schema: undefined;
+    columns: {
+        hash: drizzle_orm_pg_core.PgColumn<{
+            name: "hash";
+            tableName: "tx";
+            dataType: "custom";
+            columnType: "PgCustomColumn";
+            data: string;
+            driverParam: Buffer;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: true;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        index: drizzle_orm_pg_core.PgColumn<{
+            name: "index";
+            tableName: "tx";
+            dataType: "number";
+            columnType: "PgInteger";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        blockHash: drizzle_orm_pg_core.PgColumn<{
+            name: "block_hash";
+            tableName: "tx";
+            dataType: "custom";
+            columnType: "PgCustomColumn";
+            data: string;
+            driverParam: Buffer;
+            notNull: false;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        assetId: drizzle_orm_pg_core.PgColumn<{
+            name: "asset_id";
+            tableName: "tx";
+            dataType: "custom";
+            columnType: "PgCustomColumn";
+            data: string;
+            driverParam: Buffer;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        tokenId: drizzle_orm_pg_core.PgColumn<{
+            name: "token_id";
+            tableName: "tx";
+            dataType: "custom";
+            columnType: "PgCustomColumn";
+            data: string;
+            driverParam: Buffer;
+            notNull: false;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        committedTime: drizzle_orm_pg_core.PgColumn<{
+            name: "committed_time";
+            tableName: "tx";
+            dataType: "date";
+            columnType: "PgTimestamp";
+            data: Date;
+            driverParam: string;
+            notNull: false;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        submittedTime: drizzle_orm_pg_core.PgColumn<{
+            name: "submitted_time";
+            tableName: "tx";
+            dataType: "date";
+            columnType: "PgTimestamp";
+            data: Date;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        from: drizzle_orm_pg_core.PgColumn<{
+            name: "from";
+            tableName: "tx";
+            dataType: "custom";
+            columnType: "PgCustomColumn";
+            data: string | Script;
+            driverParam: Buffer;
+            notNull: false;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        to: drizzle_orm_pg_core.PgColumn<{
+            name: "to";
+            tableName: "tx";
+            dataType: "custom";
+            columnType: "PgCustomColumn";
+            data: string | Script;
+            driverParam: Buffer;
+            notNull: false;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        volume: drizzle_orm_pg_core.PgColumn<{
+            name: "volume";
+            tableName: "tx";
+            dataType: "string";
+            columnType: "PgNumeric";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: true;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        value: drizzle_orm_pg_core.PgColumn<{
+            name: "value";
+            tableName: "tx";
+            dataType: "custom";
+            columnType: "PgCustomColumn";
+            data: bigint;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        inputCount: drizzle_orm_pg_core.PgColumn<{
+            name: "input_count";
+            tableName: "tx";
+            dataType: "number";
+            columnType: "PgInteger";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: true;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+        outputCount: drizzle_orm_pg_core.PgColumn<{
+            name: "output_count";
+            tableName: "tx";
+            dataType: "number";
+            columnType: "PgInteger";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: true;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            generated: undefined;
+        }, {}, {}>;
+    };
+    dialect: "pg";
+}>;
 
 declare enum Chain {
     CKB = "CKB",
     BTC = "BTC"
 }
+
+type ExtraInfo = {
+    amount: string;
+    decimal: string;
+    published: boolean;
+    symbol: string;
+    type_hash: string;
+};
+type DisplayInput = {
+    id: string;
+    from_cellbase: boolean;
+    capacity: string;
+    occupied_capacity: string;
+    address_hash: string;
+    cell_index: number;
+    cell_type: string;
+    extra_info?: ExtraInfo;
+};
+type DisplayOutput = {
+    id: string;
+    capacity: string;
+    occupied_capacity: string;
+    address_hash: string;
+    status: string;
+    cell_index: number;
+    base_reward?: string;
+    commit_reward?: string;
+    proposal_reward?: string;
+    secondary_reward?: string;
+    extra_info?: ExtraInfo;
+    scriptpubkey?: string;
+    scriptpubkey_address?: string;
+    scriptpubkey_asm?: string;
+    scriptpubkey_type?: string;
+};
+type Attributes = {
+    is_cellbase: boolean;
+    tx_status: string;
+    display_inputs: DisplayInput[];
+    display_outputs: DisplayOutput[];
+    transaction_fee: string;
+    version: string;
+    block_number: string;
+    bytes: number;
+    cycles: number;
+    is_rgb_transaction: boolean;
+};
+
+type Asset = {
+    assetId: string;
+    icon: string;
+    symbol: string;
+    decimal: number | string;
+    amount: string;
+    value: string;
+};
+type InputOutput = (DisplayInput | DisplayOutput | {
+    id: string;
+    address_hash: string;
+    capacity?: string;
+}) & Asset;
+type TxDetails = typeof tx.$inferInsert & {
+    chain: Chain;
+    timestamp: number;
+    feeRate: string | number;
+    position: number;
+    inputValue: string;
+    outputValue: string;
+    isCoinBase: boolean;
+    lockTime?: number;
+    inputs: InputOutput[];
+    outputs: InputOutput[];
+    nativeTokenAmount: string;
+    nativeTokenValue: string;
+    totalValue: string;
+    attributes: Attributes | {
+        transaction: TransactionDetail;
+        vins: Vin[];
+        vouts: Vout[];
+    };
+} & (Attributes | {
+    is_cellbase: boolean;
+    tx_status: string;
+    transaction_fee: string;
+    block_number: number;
+    bytes?: string;
+    cycles?: number;
+    version: number;
+    size?: number;
+});
 
 /**
  * This is the primary router for your server.
@@ -177,9 +518,9 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 data: {
                     address: string;
                     volume: number | null;
+                    value: bigint;
                     from: number;
                     to: number;
-                    ckb: bigint;
                 }[];
                 pagination: {
                     rowCount?: number | undefined;
@@ -199,7 +540,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 data: {
                     output: bigint;
                     assetId: string;
-                    volume: string;
+                    volume: number;
                     input: bigint;
                     change: bigint;
                     assetSymbol: string;
@@ -223,7 +564,7 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
             output: {
                 data: {
                     assetId: string | null;
-                    volume: string;
+                    volume: number;
                     amount: bigint;
                     tags: string[];
                     assetName: string | null;
@@ -262,6 +603,58 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 max: number;
                 min: number;
             };
+        }>;
+    }>>;
+    tx: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
+        ctx: any;
+        meta: object;
+        errorShape: _trpc_server_unstable_core_do_not_import.DefaultErrorShape;
+        transformer: false;
+    }, _trpc_server_unstable_core_do_not_import.DecorateCreateRouterOptions<{
+        getTxInfo: _trpc_server.TRPCQueryProcedure<{
+            input: string;
+            output: {
+                assetId: string;
+                volume: string;
+                committedTime: Date | null;
+                submittedTime: Date;
+                assetInfo: {
+                    symbol: string | null;
+                    id: string;
+                    layer: number;
+                    parentId: string | null;
+                    name: string;
+                    totalSupply: string | null;
+                    decimals: number | null;
+                    description: string | null;
+                    icon: string | null;
+                    keywords: string | null;
+                    public: boolean;
+                    firstFoundBlock: string | null;
+                    firstMintAt: Date | null;
+                };
+                inputs: {
+                    index: number;
+                    address?: string | undefined;
+                }[];
+                outputs: {
+                    index: number;
+                    address?: string | undefined;
+                }[];
+                txStatus: string;
+                transactionFee?: string | undefined;
+            } | null;
+        }>;
+        getTxDetail: _trpc_server.TRPCQueryProcedure<{
+            input: string;
+            output: TxDetails | undefined;
+        }>;
+        getTxRawData: _trpc_server.TRPCQueryProcedure<{
+            input: {
+                hash: string;
+                chain: Chain;
+            };
+            output: any;
         }>;
     }>>;
     address: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
@@ -397,6 +790,30 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                 deposit: string;
                 depositTimestamp: Date | null;
                 compensation: string;
+            }[];
+        }>;
+        getAddressAssetsIncludeZeroValue: _trpc_server.TRPCQueryProcedure<{
+            input: string;
+            output: {
+                assetId: string;
+                assetAmount: string;
+                value: string | null;
+                percentChange24h: number;
+                assetInfo: {
+                    symbol: string | null;
+                    id: string;
+                    layer: number;
+                    parentId: string | null;
+                    name: string;
+                    totalSupply: string | null;
+                    decimals: number | null;
+                    description: string | null;
+                    icon: string | null;
+                    keywords: string | null;
+                    public: boolean;
+                    firstFoundBlock: string | null;
+                    firstMintAt: Date | null;
+                } | null;
             }[];
         }>;
         getAddressAssets: _trpc_server.TRPCQueryProcedure<{
@@ -1012,16 +1429,14 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                         isCoinbase: boolean;
                         scriptsig_asm: string;
                         prevout: {
-                            address: string;
-                            value: number;
                             txid: string;
                             vout: number;
+                            address?: string | undefined;
+                            value?: number | undefined;
                         };
                     }[];
                     vout: {
-                        address: string;
                         value: number;
-                        scriptpubkey_address: string;
                         scriptpubkey_asm: string;
                         scriptpubkey_type: string;
                         spent: {
@@ -1034,6 +1449,8 @@ declare const appRouter: _trpc_server_unstable_core_do_not_import.BuiltRouter<{
                             txid: string;
                             vin: number;
                         } | null;
+                        address?: string | undefined;
+                        scriptpubkey_address?: string | undefined;
                     }[];
                 };
             }>;
