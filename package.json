@@ -9,11 +9,11 @@
   "peerDependencies": {
     "@ckb-lumos/lumos": "^0.23.0",
     "@trpc/server": "^11.0.0-rc.660",
-    "drizzle-orm": "^0.42.0",
+    "drizzle-orm": "^0.45.2",
     "openapi-fetch": "^0.13.5"
   },
   "devDependencies": {
     "@ckb-lumos/lumos": "^0.23.0",
-    "drizzle-orm": "^0.42.0"
+    "drizzle-orm": "^0.45.2"
   }
 }
